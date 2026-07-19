@@ -26,7 +26,6 @@
     color:var(--txt); line-height:1.5; min-height:100vh; -webkit-font-smoothing:antialiased;
   }
   .wrap{max-width:1240px;margin:0 auto;padding:0 20px 60px}
-  /* Sticky Topbar */
   .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
     backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:16px 0 0}
   .toprow{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
@@ -41,7 +40,6 @@
     background:color-mix(in srgb,var(--teal) 14%,transparent);padding:3px 8px;border-radius:20px;margin-bottom:5px}
   .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:p 2s infinite}
   @keyframes p{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--teal) 60%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
-  /* Tabs */
   .tabs{max-width:1240px;margin:14px auto 0;padding:0 20px;display:flex;gap:6px}
   .tab{appearance:none;border:none;cursor:pointer;font:inherit;font-size:14px;font-weight:650;color:var(--mut);
     background:transparent;padding:11px 18px 13px;border-bottom:2.5px solid transparent;display:flex;align-items:center;gap:8px}
@@ -49,11 +47,9 @@
   .tab.active{color:var(--txt);border-bottom-color:var(--accent)}
   .tab .badge{font-size:10.5px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--mut);padding:1px 7px;border-radius:20px}
   .tab.active .badge{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);border-color:transparent}
-
   .panel{display:none;padding-top:24px}
   .panel.active{display:block;animation:f .25s ease}
   @keyframes f{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-
   .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
   .kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 17px;box-shadow:var(--shadow);position:relative;overflow:hidden}
   .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
@@ -62,7 +58,6 @@
   .kpi .lab{font-size:11.5px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
   .kpi .val{font-size:26px;font-weight:780;margin-top:7px;letter-spacing:-.5px}
   .kpi .meta{font-size:11.5px;color:var(--mut);margin-top:4px}
-
   .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
   .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
   .card h2{font-size:14px;font-weight:700;padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}
@@ -70,7 +65,6 @@
   .card h2 .t{display:flex;align-items:center}
   .pill{font-size:11px;font-weight:650;color:var(--mut);background:var(--card2);border:1px solid var(--line);padding:3px 9px;border-radius:20px}
   .body{padding:6px 8px 10px}
-
   .row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px}
   .row+.row{border-top:1px solid var(--line)}
   .row:hover{background:var(--card2)}
@@ -86,12 +80,6 @@
   .tag.soon{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
   .tag.over{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
   .tag.time{background:var(--card2);color:var(--mut);border:1px solid var(--line)}
-
-  .fin{display:flex;gap:10px;padding:12px;flex-wrap:wrap}
-  .finbox{flex:1;min-width:130px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
-  .finbox .l{font-size:11px;color:var(--mut);font-weight:600}
-  .finbox .n{font-size:19px;font-weight:760;margin-top:5px}
-
   .stage{display:flex;align-items:center;gap:10px;padding:9px 14px}
   .stage+.stage{border-top:1px solid var(--line)}
   .schip{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
@@ -99,7 +87,6 @@
   .scount{font-size:13px;font-weight:750}
   .sbar{flex:0 0 90px;height:7px;background:var(--card2);border-radius:5px;overflow:hidden}
   .sbar>span{display:block;height:100%}
-
   .mailrow{display:flex;gap:11px;padding:10px 13px;align-items:flex-start}
   .mailrow+.mailrow{border-top:1px solid var(--line)}
   .mdot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:6px}
@@ -107,15 +94,12 @@
   .msub{font-size:13px;font-weight:620;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
   .mfrom{font-size:11.5px;color:var(--mut);margin-top:2px}
   .mact{flex:0 0 auto;font-size:10.5px;font-weight:700;color:var(--amber);background:color-mix(in srgb,var(--amber) 15%,transparent);padding:3px 8px;border-radius:6px;align-self:center}
-
-  /* Banner / Hinweis */
   .banner{display:flex;gap:12px;align-items:flex-start;background:color-mix(in srgb,var(--amber) 10%,var(--card));
     border:1px solid color-mix(in srgb,var(--amber) 35%,var(--line));border-radius:14px;padding:14px 16px;margin-bottom:18px}
   .banner .bi{font-size:18px;line-height:1.2}
   .banner b{font-weight:700}
   .banner .bt{font-size:13px;color:var(--txt)}
   .banner .bt span{color:var(--mut)}
-
   .placeholder{color:var(--mut2);font-style:italic}
   .liqtable{width:100%;border-collapse:collapse;font-size:13.5px}
   .liqtable td{padding:10px 16px;border-top:1px solid var(--line)}
@@ -123,7 +107,6 @@
   .liqtable td:last-child{text-align:right;font-weight:700}
   .liqtable tr.hi td{background:color-mix(in srgb,var(--accent) 8%,transparent);font-weight:700}
   .liqtable tr.hi td:first-child{color:var(--accent)}
-
   .radar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
   .rcol h3{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);padding:0 4px 8px}
   .rcol .item{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:8px}
@@ -133,15 +116,38 @@
   .todo.done .box{background:var(--teal);border-color:var(--teal)}
   .todo.done .txt{color:var(--mut2);text-decoration:line-through}
   .todo .txt{font-size:13.5px}
-
   footer{text-align:center;color:var(--mut2);font-size:12px;margin-top:26px;line-height:1.7}
   .full{grid-column:1/-1}
   a{color:var(--accent);text-decoration:none}
+  /* Passwort-Sperre */
+  .gate{position:fixed;inset:0;z-index:100;background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);display:flex;align-items:center;justify-content:center;padding:20px}
+  .gate.hidden{display:none}
+  .gatecard{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);padding:30px 28px;max-width:370px;width:100%;text-align:center}
+  .gatecard .glogo{width:52px;height:52px;border-radius:14px;margin:0 auto 16px;background:linear-gradient(135deg,var(--accent),var(--violet));display:flex;align-items:center;justify-content:center;font-weight:800;color:#fff;letter-spacing:.5px}
+  .gatecard h2{font-size:18px;font-weight:750;margin-bottom:4px}
+  .gatecard p{font-size:12.5px;color:var(--mut);margin-bottom:18px}
+  .gatecard input{width:100%;font:inherit;font-size:15px;padding:12px 14px;border-radius:11px;border:1px solid var(--line);background:var(--card2);color:var(--txt);text-align:center}
+  .gatecard input:focus{outline:none;border-color:var(--accent)}
+  .gatecard button{width:100%;margin-top:10px;font:inherit;font-size:14px;font-weight:700;padding:12px;border-radius:11px;border:none;cursor:pointer;background:var(--accent);color:#fff}
+  .gatecard button:disabled{opacity:.6;cursor:default}
+  .gatecard .err{color:var(--red);font-size:12.5px;min-height:17px;margin-top:9px;font-weight:600}
   @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.radar{grid-template-columns:1fr}}
   @media (max-width:520px){.kpis{grid-template-columns:1fr}.tab{padding:10px 12px}}
 </style>
 </head>
 <body>
+  <!-- ============ PASSWORT-SPERRE ============ -->
+  <div class="gate" id="gate">
+    <form class="gatecard" id="gateForm" autocomplete="off">
+      <div class="glogo">ZPG</div>
+      <h2>ZPG Cockpit</h2>
+      <p>Geschützter Bereich. Bitte Passwort eingeben.</p>
+      <input type="password" id="gatePw" placeholder="Passwort" autofocus autocomplete="current-password">
+      <button type="submit" id="gateBtn">Entsperren</button>
+      <div class="err" id="gateErr"></div>
+    </form>
+  </div>
+
   <div class="top">
     <div class="toprow">
       <div class="brand">
@@ -159,7 +165,7 @@
     <div class="tabs">
       <button class="tab active" data-tab="live">🟢 Live <span class="badge">auto</span></button>
       <button class="tab" data-tab="fin">€ Finanzen &amp; Liquidität <span class="badge">auf Zuruf</span></button>
-      <button class="tab" data-tab="week">🗓 Weekly <span class="badge">KW 30</span></button>
+      <button class="tab" data-tab="week">🗓 Weekly <span class="badge" id="weekBadge">KW 30</span></button>
     </div>
   </div>
 
@@ -215,7 +221,7 @@
       </div>
     </section>
 
-    <!-- ============ TAB 2: FINANZEN (manuell, auf Zuruf) ============ -->
+    <!-- ============ TAB 2: FINANZEN ============ -->
     <section class="panel" id="fin">
       <div class="banner" style="background:color-mix(in srgb,var(--teal) 9%,var(--card));border-color:color-mix(in srgb,var(--teal) 32%,var(--line))">
         <div class="bi">🏦</div>
@@ -266,11 +272,11 @@
       </div>
     </section>
 
-    <!-- ============ TAB 3: WEEKLY (manuell, auf Zuruf) ============ -->
+    <!-- ============ TAB 3: WEEKLY ============ -->
     <section class="panel" id="week">
       <div class="banner" style="background:color-mix(in srgb,var(--accent) 8%,var(--card));border-color:color-mix(in srgb,var(--accent) 30%,var(--line))">
         <div class="bi">🗓</div>
-        <div class="bt"><b>KW 30 · 20.–26.07.2026.</b> <span>Wochenplan &amp; ZPG-Projekte kommen automatisch aus Kalender + Rentman. To-dos und Radar pflegst du per Zuruf („aktualisiere weekly").</span></div>
+        <div class="bt"><b id="weekKW">KW 30</b> <span>Wochenplan &amp; ZPG-Projekte kommen automatisch aus Kalender + Rentman. To-dos und Radar pflegst du per Zuruf („aktualisiere weekly").</span></div>
       </div>
 
       <div class="grid">
@@ -291,37 +297,25 @@
 
         <div class="card full">
           <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--violet) 18%,transparent);color:var(--violet)">📡</span>Radar · nicht verlieren</span><span class="pill">3 Bereiche</span></h2>
-          <div class="body" style="padding:14px 16px">
-            <div class="radar">
-              <div class="rcol"><h3>Kurzfristig</h3>
-                <div class="item">Sanofi-Angebot ZPG-ANG-VM-2026-148 abgelaufen → nachfassen</div>
-                <div class="item">DATEV-Belege freigeben (3 neu)</div>
-                <div class="item">WoMo-Versicherung anrufen (Mo)</div>
-              </div>
-              <div class="rcol"><h3>Akquise &amp; Marketing</h3>
-                <div class="item">Handelsblatt BAV Berlin → Angebot nachverfolgen</div>
-                <div class="item">z-pg.com Indexierungs-Fehler (Search Console) prüfen</div>
-                <div class="item">Minijob Buchhaltung/Büro – Bewerber-Anfrage</div>
-              </div>
-              <div class="rcol"><h3>Strategisch &amp; privat</h3>
-                <div class="item">„Operatives Geschäft abgegeben?" @Renke (Ziel Aug)</div>
-                <div class="item">Sanofi – neue Supplier-Prozesse ab 01.07. umsetzen</div>
-              </div>
-            </div>
-          </div>
+          <div class="body" style="padding:14px 16px"><div class="radar" id="radar"></div></div>
         </div>
       </div>
     </section>
 
     <footer>
       * Volumen, Summen &amp; Forderungen sind eigene Berechnungen aus Rentman-Werten und können intern abweichend berechnet sein.<br>
-      ZPG Cockpit · Live-Tab automatisch aus verbundenen Diensten · Finanzen &amp; Weekly auf Zuruf
+      ZPG Cockpit · Live-Tab automatisch aus verbundenen Diensten · Finanzen &amp; Weekly auf Zuruf · Daten verschlüsselt
     </footer>
   </div>
 
 <script>
 const eur = n => n.toLocaleString('de-DE',{maximumFractionDigits:0}) + ' €';
+const eur2 = n => n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
 const MON=["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+const stageColors=["var(--accent)","var(--teal)","var(--violet)","var(--amber)"];
+const setText=(id,v)=>{const el=document.getElementById(id);if(el)el.textContent=v;};
+const fillLiq=(id,val)=>{const el=document.getElementById(id);if(el){el.textContent=eur(val);el.classList.remove('placeholder');}};
+const fmtRange=(s,e)=>{const a=new Date(s),b=new Date(e);const f=d=>d.getDate()+". "+MON[d.getMonth()];return f(a)+" – "+f(b)+" "+b.getFullYear();};
 
 /* Tabs */
 document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
@@ -331,36 +325,15 @@ document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
   document.getElementById(t.dataset.tab).classList.add('active');
 }));
 
-/* ====== MANUELLE Inhalte (Weekly/Pipeline-Notiz) – NUR auf Zuruf ändern ====== */
-const stageColors=["var(--accent)","var(--teal)","var(--violet)","var(--amber)"];
-const pipelineNote='<div class="stage" style="color:var(--mut);font-size:11.5px"><span style="flex:1">Namhaft: Ammersee Serenade 2027 · PATRIZIA / BMW / Wacker (Jubiläum 2027) · Munich Startup Festival</span></div>';
-const weekendTail=[
-  {d:"Sa 25.07",items:[]},
-  {d:"So 26.07",items:[{t:"Surftown Charivari – Projektende",time:"ganztägig"}]}
-];
-const wkProjects=[
-  {name:"Dry Hire SimEvents",sub:"21.07 – 11.08 · #2026100"},
-  {name:"Surftown Charivari",sub:"24.07 – 26.07 · #2026093"}
-];
-const todos=["Sanofi-Angebot nachfassen (abgelaufen)","DATEV-Belege freigeben","WoMo-Versicherung anrufen","Handelsblatt BAV Berlin – Angebot nachverfolgen","Berichtsheft abgeben (Fr)"];
-
-/* ====== Rendering des LIVE-Tabs aus live-data.json ====== */
-const fmtRange=(s,e)=>{const a=new Date(s),b=new Date(e);const f=d=>d.getDate()+". "+MON[d.getMonth()];return f(a)+" – "+f(b)+" "+b.getFullYear();};
-
-function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
-
-function render(data){
-  const projects=data.projects||[], invoices=data.invoices||[], stages=data.stages||[],
-        cal=data.cal||[], mails=data.mails||[], kpis=data.kpis||{};
-
-  /* Zeitstempel + KPI-Kacheln */
-  setText('stamp', data.stamp || '–');
+/* ---------- Rendering ---------- */
+function renderLive(L, WK){
+  const projects=L.projects||[], invoices=L.invoices||[], stages=L.stages||[], cal=L.cal||[], mails=L.mails||[], kpis=L.kpis||{};
+  setText('stamp', L.stamp||'–');
   if(kpis.invoices){setText('kpiInvVal',kpis.invoices.val);setText('kpiInvMeta',kpis.invoices.meta);}
   if(kpis.projects){setText('kpiProjVal',kpis.projects.val);setText('kpiProjMeta',kpis.projects.meta);}
   if(kpis.deals){setText('kpiDealVal',kpis.deals.val);setText('kpiDealMeta',kpis.deals.meta);}
   if(kpis.termine){setText('kpiTermVal',kpis.termine.val);setText('kpiTermMeta',kpis.termine.meta);}
 
-  /* Projekte */
   document.getElementById('projects').innerHTML = projects.map(p=>{
     const d=new Date(p.s);
     const tag=p.tag==="live"?'<span class="tag live">läuft</span>':p.tag==="soon"?'<span class="tag soon">diese Woche</span>':'';
@@ -368,72 +341,43 @@ function render(data){
       <div class="rmain"><div class="rtitle">${p.name} ${tag}</div><div class="rsub">#${p.num} · ${fmtRange(p.s,p.e)}</div></div>
       <div class="amt">${p.v>0?eur(p.v):'—'}</div></div>`;}).join('');
 
-  /* Rechnungen + Mahnliste */
   document.getElementById('invoices').innerHTML = invoices.map(i=>`
     <div class="row"><div class="rmain"><div class="rtitle">${i.num} ${i.over?'<span class="tag over">überfällig</span>':''}</div>
       <div class="rsub">Rechnungsdatum ${i.date}</div></div>
       <div class="amt" style="color:${i.over?'var(--red)':'var(--txt)'}">${eur(i.amt)}</div></div>`).join('');
-  document.getElementById('invPill').textContent = invoices.length+' offen';
+  setText('invPill', invoices.length+' offen');
 
-  document.getElementById('mahnliste').innerHTML = invoices.filter(i=>i.over)
-    .sort((a,b)=>b.amt-a.amt).map(i=>`
-    <div class="row"><div class="rmain"><div class="rtitle">${i.num}</div>
-      <div class="rsub">seit ${i.date} offen</div></div>
+  document.getElementById('mahnliste').innerHTML = invoices.filter(i=>i.over).sort((a,b)=>b.amt-a.amt).map(i=>`
+    <div class="row"><div class="rmain"><div class="rtitle">${i.num}</div><div class="rsub">seit ${i.date} offen</div></div>
       <div class="amt" style="color:var(--red)">${eur(i.amt)}</div></div>`).join('');
+  setText('finForderungen', eur(invoices.reduce((a,i)=>a+(i.amt||0),0)));
 
-  /* Fin-KPI „Ausstehende Forderungen" aus Rechnungssumme (brutto) */
-  const sumInv = invoices.reduce((a,i)=>a+(i.amt||0),0);
-  setText('finForderungen', eur(sumInv));
-
-  /* Pipeline */
   const maxc=Math.max(1,...stages.map(s=>s.c));
   document.getElementById('pipeline').innerHTML=stages.map((s,i)=>{
     const color=stageColors[i]||'var(--accent)';
     return `<div class="stage"><span class="schip" style="background:${color}"></span><span class="sname">${s.name}</span>
       <span class="sbar"><span style="width:${s.c/maxc*100}%;background:${color}"></span></span><span class="scount">${s.c}</span></div>`;}).join('')
-    + pipelineNote;
-  document.getElementById('pipePill').textContent = stages.reduce((a,s)=>a+s.c,0)+' Deals';
+    + (WK.pipelineNote?`<div class="stage" style="color:var(--mut);font-size:11.5px"><span style="flex:1">${WK.pipelineNote}</span></div>`:'');
+  setText('pipePill', stages.reduce((a,s)=>a+s.c,0)+' Deals');
 
-  /* Kalender */
   document.getElementById('calendar').innerHTML=cal.map(day=>`
     <div class="row" style="align-items:flex-start"><div class="when"><div class="d">${day.d.split(' ')[1].split('.')[0]}</div><div class="m">${day.d.split(' ')[0]}</div></div>
       <div class="rmain" style="display:flex;flex-direction:column;gap:6px">
         ${day.items.map(it=>`<div style="display:flex;gap:10px;align-items:center"><span class="tag time">${it.time}</span><span class="rtitle" style="white-space:normal">${it.t}</span></div>`).join('')}
       </div></div>`).join('');
 
-  /* Mails */
   document.getElementById('mails').innerHTML=mails.map(m=>`
     <div class="mailrow"><span class="mdot" style="background:${m.c}"></span>
       <div class="mmain"><div class="msub">${m.sub}</div><div class="mfrom">${m.from}</div></div>
       ${m.act?`<span class="mact">${m.act}</span>`:''}</div>`).join('');
-
-  /* Weekly · Wochenplan (Kalender live + Wochenende manuell) */
-  document.getElementById('weekplan').innerHTML=cal.concat(weekendTail).map(day=>`
-    <div class="row" style="align-items:flex-start"><div class="when"><div class="d">${day.d.split(' ')[1].split('.')[0]}</div><div class="m">${day.d.split(' ')[0]}</div></div>
-      <div class="rmain" style="display:flex;flex-direction:column;gap:6px">
-        ${day.items.length?day.items.map(it=>`<div style="display:flex;gap:10px;align-items:center"><span class="tag time">${it.time}</span><span class="rtitle" style="white-space:normal">${it.t}</span></div>`).join(''):'<span class="placeholder" style="font-size:12.5px">keine Termine</span>'}
-      </div></div>`).join('');
 }
 
-/* Weekly · statische (manuelle) Blöcke */
-document.getElementById('weekprojects').innerHTML=wkProjects.map(p=>`
-  <div class="row"><div class="rmain"><div class="rtitle">${p.name}</div><div class="rsub">${p.sub}</div></div></div>`).join('');
-document.getElementById('todos').innerHTML=todos.map(t=>`
-  <div class="todo" onclick="this.classList.toggle('done')"><span class="box">✓</span><span class="txt">${t}</span></div>`).join('');
-
-/* ====== FINANZEN-Tab aus finanzen-data.json (Enable Banking) ====== */
-const eur2 = n => n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
-function fillLiq(id,val){const el=document.getElementById(id);if(el){el.textContent=eur(val);el.classList.remove('placeholder');}}
-
-function renderFin(f){
-  const k=f.konten||{}, m=f.modell||{};
-  /* KPI + Banner */
-  if(k.gesamt!=null){setText('finKontenVal',eur(k.gesamt));setText('finKontenMeta','GmbH + Rücklagen · Stand '+(f.konto_stand||''));}
-  setText('finStandHint', f.konto_stand?('· Stand '+f.konto_stand):'');
+function renderFin(F){
+  const k=F.konten||{}, m=F.modell||{};
+  if(k.gesamt!=null){setText('finKontenVal',eur(k.gesamt));setText('finKontenMeta','GmbH + Rücklagen · Stand '+(F.konto_stand||''));}
+  setText('finStandHint', F.konto_stand?('· Stand '+F.konto_stand):'');
   if(m.netto_liquiditaet!=null){const el=document.getElementById('finNettoVal');el.textContent=eur(m.netto_liquiditaet);el.classList.remove('placeholder');}
   if(m.runway_netto!=null){const el=document.getElementById('finRunwayVal');el.textContent=m.runway_netto;el.classList.remove('placeholder');}
-
-  /* Liquiditätstabelle – nur befüllen, was vorhanden ist */
   if(k.gmbh!=null)fillLiq('liqGmbh',k.gmbh);
   if(k.ruecklagen!=null)fillLiq('liqRuecklagen',k.ruecklagen);
   if(k.gesamt!=null)fillLiq('liqGesamt',k.gesamt);
@@ -443,14 +387,8 @@ function renderFin(f){
   if(m.zu_fakturieren!=null)fillLiq('liqFakturieren',m.zu_fakturieren);
   if(m.potenzielle_liquiditaet!=null)fillLiq('liqPotenziell',m.potenzielle_liquiditaet);
 
-  /* Zahlungsabgleich */
-  const st={
-    bezahlt:{c:'var(--mut)',t:'bereits bezahlt'},
-    vorschlag:{c:'var(--teal)',t:'Vorschlag: als bezahlt markieren'},
-    sichten:{c:'var(--amber)',t:'zur Sichtung'}
-  };
-  const z=f.zahlungseingaenge||[];
-  const matched=z.filter(x=>x.inv).length;
+  const st={bezahlt:{c:'var(--mut)',t:'bereits bezahlt'},vorschlag:{c:'var(--teal)',t:'Vorschlag: als bezahlt markieren'},sichten:{c:'var(--amber)',t:'zur Sichtung'}};
+  const z=F.zahlungseingaenge||[]; const matched=z.filter(x=>x.inv).length;
   document.getElementById('zahlungen').innerHTML =
     `<div style="font-size:11.5px;color:var(--mut);padding:4px 6px 10px">Zahlungseingänge letzte 10 Tage · ${matched} Rechnung(en) zugeordnet · Trockenmodus (nichts wird automatisch gebucht)</div>`
     + z.map(x=>{const s=st[x.status]||st.sichten;return `
@@ -460,20 +398,52 @@ function renderFin(f){
           <div style="font-size:10.5px;font-weight:700;color:${s.c};margin-top:2px">${s.t}</div></div></div>`;}).join('');
 }
 
-/* Live-Daten laden (Cache umgehen, damit frische Task-Updates sofort erscheinen) */
-fetch('live-data.json?v='+Date.now())
-  .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-  .then(render)
-  .catch(err=>{
-    setText('stamp','Daten konnten nicht geladen werden');
-    console.error('live-data.json load failed:',err);
-  });
+function renderWeek(L, WK){
+  if(WK.bannerKW)setText('weekKW',WK.bannerKW);
+  const cal=L.cal||[], tail=WK.weekendTail||[];
+  document.getElementById('weekplan').innerHTML=cal.concat(tail).map(day=>`
+    <div class="row" style="align-items:flex-start"><div class="when"><div class="d">${day.d.split(' ')[1].split('.')[0]}</div><div class="m">${day.d.split(' ')[0]}</div></div>
+      <div class="rmain" style="display:flex;flex-direction:column;gap:6px">
+        ${day.items.length?day.items.map(it=>`<div style="display:flex;gap:10px;align-items:center"><span class="tag time">${it.time}</span><span class="rtitle" style="white-space:normal">${it.t}</span></div>`).join(''):'<span class="placeholder" style="font-size:12.5px">keine Termine</span>'}
+      </div></div>`).join('');
+  document.getElementById('weekprojects').innerHTML=(WK.wkProjects||[]).map(p=>`
+    <div class="row"><div class="rmain"><div class="rtitle">${p.name}</div><div class="rsub">${p.sub}</div></div></div>`).join('');
+  document.getElementById('todos').innerHTML=(WK.todos||[]).map(t=>`
+    <div class="todo" onclick="this.classList.toggle('done')"><span class="box">✓</span><span class="txt">${t}</span></div>`).join('');
+  const r=WK.radar||{};
+  document.getElementById('radar').innerHTML=[['Kurzfristig',r.kurzfristig],['Akquise & Marketing',r.akquise],['Strategisch & privat',r.strategisch]]
+    .map(([h,items])=>`<div class="rcol"><h3>${h}</h3>${(items||[]).map(i=>`<div class="item">${i}</div>`).join('')}</div>`).join('');
+}
 
-/* Finanz-Daten laden */
-fetch('finanzen-data.json?v='+Date.now())
-  .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
-  .then(renderFin)
-  .catch(err=>console.error('finanzen-data.json load failed:',err));
+/* ---------- Entschlüsselung (AES-GCM, Schlüssel aus Passwort via PBKDF2) ---------- */
+const b64d = s => Uint8Array.from(atob(s), c=>c.charCodeAt(0));
+async function deriveKey(pw, salt){
+  const km = await crypto.subtle.importKey('raw', new TextEncoder().encode(pw), 'PBKDF2', false, ['deriveKey']);
+  return crypto.subtle.deriveKey({name:'PBKDF2', salt, iterations:200000, hash:'SHA-256'}, km, {name:'AES-GCM', length:256}, false, ['decrypt']);
+}
+async function decryptFile(url, pw){
+  const o = await (await fetch(url+'?v='+Date.now(),{cache:'no-store'})).json();
+  const key = await deriveKey(pw, b64d(o.salt));
+  const pt = await crypto.subtle.decrypt({name:'AES-GCM', iv:b64d(o.iv)}, key, b64d(o.ct));
+  return JSON.parse(new TextDecoder().decode(pt));
+}
+async function unlock(pw){
+  const [L,F,WK] = await Promise.all([
+    decryptFile('live-data.enc.json',pw),
+    decryptFile('finanzen-data.enc.json',pw),
+    decryptFile('weekly-data.enc.json',pw)
+  ]);
+  renderLive(L,WK); renderFin(F); renderWeek(L,WK);
+  document.getElementById('gate').classList.add('hidden');
+}
+
+const gForm=document.getElementById('gateForm'), gErr=document.getElementById('gateErr'), gBtn=document.getElementById('gateBtn'), gPw=document.getElementById('gatePw');
+gForm.addEventListener('submit', async e=>{
+  e.preventDefault();
+  gErr.textContent=''; gBtn.disabled=true; gBtn.textContent='Entschlüssele…';
+  try{ await unlock(gPw.value); }
+  catch(err){ gErr.textContent='Falsches Passwort.'; gBtn.disabled=false; gBtn.textContent='Entsperren'; gPw.select(); }
+});
 </script>
 </body>
 </html>
