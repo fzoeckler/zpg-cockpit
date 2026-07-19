@@ -217,16 +217,16 @@
 
     <!-- ============ TAB 2: FINANZEN (manuell, auf Zuruf) ============ -->
     <section class="panel" id="fin">
-      <div class="banner">
-        <div class="bi">⏳</div>
-        <div class="bt"><b>Finanzstand noch nicht in diesem Zyklus aktualisiert.</b><br>
-          <span>Sag mir „<b>aktualisiere Liquidität</b>" und nenn mir Kontostände (GmbH + Rücklagen) sowie die offenen DATEV-Eingangsrechnungen – dann fülle ich Konten, Netto-Liquidität und Runway. Die Ausgangsrechnungen unten kommen automatisch aus Rentman.</span></div>
+      <div class="banner" style="background:color-mix(in srgb,var(--teal) 9%,var(--card));border-color:color-mix(in srgb,var(--teal) 32%,var(--line))">
+        <div class="bi">🏦</div>
+        <div class="bt"><b>Kontostände live aus Enable Banking</b> <span id="finStandHint"></span><br>
+          <span>Salden &amp; Zahlungseingänge kommen automatisch aus der Bank. Für <b>Netto-Liquidität &amp; Runway</b> fehlen noch die offenen DATEV-Eingangsrechnungen – sag „<b>aktualisiere Liquidität</b>", dann fülle ich das Modell. Forderungen &amp; Mahnliste laufen aus Rentman.</span></div>
       </div>
 
       <div class="kpis">
-        <div class="kpi k-teal"><div class="lab">Konten gesamt</div><div class="val placeholder">—</div><div class="meta">GmbH + Rücklagen</div></div>
-        <div class="kpi k-accent" style="--x:1"><div class="lab">Netto-Liquidität</div><div class="val placeholder">—</div><div class="meta">nach offenen Verbindlichkeiten</div></div>
-        <div class="kpi k-amber"><div class="lab">Runway</div><div class="val placeholder">—</div><div class="meta">÷ 42.000 € Fixkosten/Monat</div></div>
+        <div class="kpi k-teal"><div class="lab">Konten gesamt</div><div class="val" id="finKontenVal">—</div><div class="meta" id="finKontenMeta">GmbH + Rücklagen</div></div>
+        <div class="kpi k-accent" style="--x:1"><div class="lab">Netto-Liquidität</div><div class="val placeholder" id="finNettoVal">—</div><div class="meta">nach offenen Verbindlichkeiten</div></div>
+        <div class="kpi k-amber"><div class="lab">Runway</div><div class="val placeholder" id="finRunwayVal">—</div><div class="meta">÷ 44.080 € Fixkosten/Monat</div></div>
         <div class="kpi k-red"><div class="lab">Ausstehende Forderungen</div><div class="val" id="finForderungen">—</div><div class="meta">brutto, aus Rentman*</div></div>
       </div>
 
@@ -234,22 +234,27 @@
         <div class="card">
           <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--teal) 18%,transparent);color:var(--teal)">🏦</span>Liquiditätsstatus</span><span class="pill">bei Zuruf befüllt</span></h2>
           <table class="liqtable">
-            <tr><td>GmbH-Konto</td><td class="placeholder">—</td></tr>
-            <tr><td>Rücklagenkonto</td><td class="placeholder">—</td></tr>
-            <tr class="hi"><td>Konten gesamt</td><td class="placeholder">—</td></tr>
-            <tr><td>− Offene Eingangsrechnungen (netto)</td><td class="placeholder">—</td></tr>
-            <tr class="hi"><td>Netto-Liquidität</td><td class="placeholder">—</td></tr>
-            <tr><td>+ Ausstehende Forderungen (netto)</td><td class="placeholder">—</td></tr>
-            <tr><td>+ Zu fakturieren</td><td class="placeholder">—</td></tr>
-            <tr class="hi"><td>Potenzielle Liquidität</td><td class="placeholder">—</td></tr>
-            <tr><td>Reichweite Netto-Liquidität</td><td class="placeholder">—</td></tr>
-            <tr><td>Reichweite potenziell</td><td class="placeholder">—</td></tr>
+            <tr><td>GmbH-Konto</td><td id="liqGmbh" class="placeholder">—</td></tr>
+            <tr><td>Rücklagenkonto</td><td id="liqRuecklagen" class="placeholder">—</td></tr>
+            <tr class="hi"><td>Konten gesamt</td><td id="liqGesamt" class="placeholder">—</td></tr>
+            <tr><td>− Offene Eingangsrechnungen (netto)</td><td id="liqEingang" class="placeholder">—</td></tr>
+            <tr class="hi"><td>Netto-Liquidität</td><td id="liqNetto" class="placeholder">—</td></tr>
+            <tr><td>+ Ausstehende Forderungen (netto)</td><td id="liqForderungen" class="placeholder">—</td></tr>
+            <tr><td>+ Zu fakturieren</td><td id="liqFakturieren" class="placeholder">—</td></tr>
+            <tr class="hi"><td>Potenzielle Liquidität</td><td id="liqPotenziell" class="placeholder">—</td></tr>
+            <tr><td>Reichweite Netto-Liquidität</td><td id="liqReichNetto" class="placeholder">—</td></tr>
+            <tr><td>Reichweite potenziell</td><td id="liqReichPot" class="placeholder">—</td></tr>
           </table>
         </div>
 
         <div class="card">
           <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--red) 18%,transparent);color:var(--red)">🚨</span>Mahnliste · überfällig</span><span class="pill">aus Rentman</span></h2>
           <div class="body" id="mahnliste"></div>
+        </div>
+
+        <div class="card full">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--teal) 18%,transparent);color:var(--teal)">🔄</span>Zahlungsabgleich · Enable Banking</span><span class="pill">Trockenmodus · letzte 10 Tage</span></h2>
+          <div class="body" id="zahlungen" style="padding:6px 10px 12px"></div>
         </div>
 
         <div class="card full">
@@ -416,6 +421,45 @@ document.getElementById('weekprojects').innerHTML=wkProjects.map(p=>`
 document.getElementById('todos').innerHTML=todos.map(t=>`
   <div class="todo" onclick="this.classList.toggle('done')"><span class="box">✓</span><span class="txt">${t}</span></div>`).join('');
 
+/* ====== FINANZEN-Tab aus finanzen-data.json (Enable Banking) ====== */
+const eur2 = n => n.toLocaleString('de-DE',{minimumFractionDigits:2,maximumFractionDigits:2}) + ' €';
+function fillLiq(id,val){const el=document.getElementById(id);if(el){el.textContent=eur(val);el.classList.remove('placeholder');}}
+
+function renderFin(f){
+  const k=f.konten||{}, m=f.modell||{};
+  /* KPI + Banner */
+  if(k.gesamt!=null){setText('finKontenVal',eur(k.gesamt));setText('finKontenMeta','GmbH + Rücklagen · Stand '+(f.konto_stand||''));}
+  setText('finStandHint', f.konto_stand?('· Stand '+f.konto_stand):'');
+  if(m.netto_liquiditaet!=null){const el=document.getElementById('finNettoVal');el.textContent=eur(m.netto_liquiditaet);el.classList.remove('placeholder');}
+  if(m.runway_netto!=null){const el=document.getElementById('finRunwayVal');el.textContent=m.runway_netto;el.classList.remove('placeholder');}
+
+  /* Liquiditätstabelle – nur befüllen, was vorhanden ist */
+  if(k.gmbh!=null)fillLiq('liqGmbh',k.gmbh);
+  if(k.ruecklagen!=null)fillLiq('liqRuecklagen',k.ruecklagen);
+  if(k.gesamt!=null)fillLiq('liqGesamt',k.gesamt);
+  if(m.eingangsrechnungen_netto!=null)fillLiq('liqEingang',m.eingangsrechnungen_netto);
+  if(m.netto_liquiditaet!=null)fillLiq('liqNetto',m.netto_liquiditaet);
+  if(m.forderungen_netto!=null)fillLiq('liqForderungen',m.forderungen_netto);
+  if(m.zu_fakturieren!=null)fillLiq('liqFakturieren',m.zu_fakturieren);
+  if(m.potenzielle_liquiditaet!=null)fillLiq('liqPotenziell',m.potenzielle_liquiditaet);
+
+  /* Zahlungsabgleich */
+  const st={
+    bezahlt:{c:'var(--mut)',t:'bereits bezahlt'},
+    vorschlag:{c:'var(--teal)',t:'Vorschlag: als bezahlt markieren'},
+    sichten:{c:'var(--amber)',t:'zur Sichtung'}
+  };
+  const z=f.zahlungseingaenge||[];
+  const matched=z.filter(x=>x.inv).length;
+  document.getElementById('zahlungen').innerHTML =
+    `<div style="font-size:11.5px;color:var(--mut);padding:4px 6px 10px">Zahlungseingänge letzte 10 Tage · ${matched} Rechnung(en) zugeordnet · Trockenmodus (nichts wird automatisch gebucht)</div>`
+    + z.map(x=>{const s=st[x.status]||st.sichten;return `
+      <div class="row"><div class="when" style="flex:0 0 52px"><div class="d" style="font-size:13px">${x.date}</div></div>
+        <div class="rmain"><div class="rtitle">${x.from}</div><div class="rsub">${x.inv?('→ '+x.inv):'kein Rechnungsbezug'}</div></div>
+        <div style="flex:0 0 auto;text-align:right"><div class="amt">${eur2(x.amt)}</div>
+          <div style="font-size:10.5px;font-weight:700;color:${s.c};margin-top:2px">${s.t}</div></div></div>`;}).join('');
+}
+
 /* Live-Daten laden (Cache umgehen, damit frische Task-Updates sofort erscheinen) */
 fetch('live-data.json?v='+Date.now())
   .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
@@ -424,6 +468,12 @@ fetch('live-data.json?v='+Date.now())
     setText('stamp','Daten konnten nicht geladen werden');
     console.error('live-data.json load failed:',err);
   });
+
+/* Finanz-Daten laden */
+fetch('finanzen-data.json?v='+Date.now())
+  .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+  .then(renderFin)
+  .catch(err=>console.error('finanzen-data.json load failed:',err));
 </script>
 </body>
 </html>

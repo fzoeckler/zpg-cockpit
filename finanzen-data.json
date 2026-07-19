@@ -1,0 +1,23 @@
+{
+  "konto_stand": "19.07.2026",
+  "konten": { "gmbh": 52397, "ruecklagen": 95121, "gesamt": 147518 },
+  "modell": {
+    "eingangsrechnungen_netto": null,
+    "netto_liquiditaet": null,
+    "forderungen_netto": null,
+    "zu_fakturieren": null,
+    "potenzielle_liquiditaet": null,
+    "runway_netto": null,
+    "runway_potenziell": null,
+    "fixkosten_monat": 44080
+  },
+  "zahlungseingaenge": [
+    { "date": "17.07.", "amt": 1214.93, "from": "Maximilian Anke", "inv": "", "status": "sichten" },
+    { "date": "17.07.", "amt": 234.59, "from": "FK Fürstenfeldbruck", "inv": "", "status": "sichten" },
+    { "date": "14.07.", "amt": 206.00, "from": "Dominik Loweg", "inv": "ZPG-Re-2026-053", "status": "vorschlag" },
+    { "date": "14.07.", "amt": 100.30, "from": "FK Fürstenfeldbruck", "inv": "", "status": "sichten" },
+    { "date": "10.07.", "amt": 122.73, "from": "VBA Events GmbH", "inv": "ZPG-Re-2026-052", "status": "bezahlt" },
+    { "date": "09.07.", "amt": 1721.50, "from": "Stephan Panzer", "inv": "", "status": "sichten" },
+    { "date": "09.07.", "amt": 122.60, "from": "BARMER Ersatzkasse", "inv": "", "status": "sichten" }
+  ]
+}
