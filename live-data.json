@@ -1,0 +1,57 @@
+{
+  "stamp": "So, 19.07.2026, 13:40 Uhr",
+  "kpis": {
+    "invoices": { "val": "87.634 €", "meta": "10 offen · inkl. MwSt." },
+    "projects": { "val": "15", "meta": "3 laufen · ≈ 202.650 € Volumen (netto)*" },
+    "deals": { "val": "91", "meta": "73 identifiziert · 18 Erstkontakt" },
+    "termine": { "val": "9", "meta": "Nächster: Mo 08:30 Wochenmeeting" }
+  },
+  "projects": [
+    { "name": "TSV – AX5", "num": "2026107", "s": "2026-07-17", "e": "2026-07-20", "v": 220, "tag": "live" },
+    { "name": "Beachparty TTC", "num": "2026103", "s": "2026-07-15", "e": "2026-07-20", "v": 1808, "tag": "live" },
+    { "name": "Dry Hire – AX5", "num": "2026072", "s": "2026-07-17", "e": "2026-07-20", "v": 2042, "tag": "live" },
+    { "name": "Dry Hire SimEvents", "num": "2026100", "s": "2026-07-21", "e": "2026-08-11", "v": 1966, "tag": "soon" },
+    { "name": "Surftown Charivari", "num": "2026093", "s": "2026-07-24", "e": "2026-07-26", "v": 0, "tag": "soon" },
+    { "name": "Dry Hire Max Bauer", "num": "2026106", "s": "2026-08-05", "e": "2026-08-10", "v": 1395 },
+    { "name": "Allianz Event @ Bachmair Weissach", "num": "2026089", "s": "2026-08-31", "e": "2026-09-03", "v": 0 },
+    { "name": "LED Wand Support Messestände", "num": "2026092", "s": "2026-09-03", "e": "2026-09-30", "v": 72950 },
+    { "name": "VideoART – Solta Wien, Kaisergarten", "num": "2026101", "s": "2026-09-10", "e": "2026-09-14", "v": 34520 },
+    { "name": "FOA Institut @ Bachmair", "num": "2026099", "s": "2026-09-24", "e": "2026-09-28", "v": 3789 },
+    { "name": "Messestand Munich Start Up", "num": "2026096", "s": "2026-09-26", "e": "2026-10-02", "v": 7971 },
+    { "name": "Wedding @ Bayrischer Hof (Everso)", "num": "2026078", "s": "2026-10-09", "e": "2026-10-12", "v": 13378 },
+    { "name": "Korbinians Kolleg 26/27", "num": "2026102", "s": "2026-10-16", "e": "2027-03-15", "v": 8400 },
+    { "name": "pure-events @ Bachmair", "num": "2026079", "s": "2026-10-22", "e": "2026-10-26", "v": 5506 },
+    { "name": "Betriebliche Altersversorgung 2026 · Berlin", "num": "2026104", "s": "2026-11-07", "e": "2026-11-12", "v": 36756 },
+    { "name": "Industry Forward Summit 2027", "num": "2026098", "s": "2027-06-28", "e": "2027-07-02", "v": 13470 }
+  ],
+  "invoices": [
+    { "num": "ZPG-Re-2026-055", "date": "15.07.26", "amt": 14989, "over": false },
+    { "num": "ZPG-Re-2026-054", "date": "09.07.26", "amt": 3061, "over": false },
+    { "num": "ZPG-Re-2026-053", "date": "07.07.26", "amt": 206, "over": false },
+    { "num": "ZPG-Re-2026-051", "date": "07.07.26", "amt": 12913, "over": false },
+    { "num": "ZPG-Re-2026-050", "date": "01.07.26", "amt": 1941, "over": false },
+    { "num": "ZPG-Re-2026-048", "date": "25.06.26", "amt": 21292, "over": true },
+    { "num": "ZPG-Re-2026-044", "date": "15.06.26", "amt": 23982, "over": true },
+    { "num": "ZPG-Re-2026-036", "date": "04.05.26", "amt": 5211, "over": true },
+    { "num": "ZPG-Re-2026-027", "date": "30.03.26", "amt": 430, "over": true },
+    { "num": "ZPG-Re-2026-007", "date": "27.01.26", "amt": 3608, "over": true }
+  ],
+  "stages": [
+    { "name": "Identifiziert", "c": 73 },
+    { "name": "Erstkontakt gesendet", "c": 18 }
+  ],
+  "cal": [
+    { "d": "Mo 20.07", "items": [ { "t": "ZPG Wochenmeeting", "time": "08:30" }, { "t": "Versicherung wg. WoMo anrufen", "time": "13:00" }, { "t": "Absprache ZPG · Fabian / Vanessa", "time": "14:00" }, { "t": "Bertram Call · Arndt", "time": "15:30" }, { "t": "Bertram Call · Jan", "time": "16:00" } ] },
+    { "d": "Di 21.07", "items": [ { "t": "Gruppen-Call der ASCENDERS", "time": "11:00" }, { "t": "Mittagessen Dani & Fabi", "time": "12:00" } ] },
+    { "d": "Mi 22.07", "items": [ { "t": "Marion Lang · Coaching", "time": "09:00" } ] },
+    { "d": "Do 23.07", "items": [ { "t": "ELCO · Wartung der Heizung", "time": "10:30" } ] },
+    { "d": "Fr 24.07", "items": [ { "t": "Berichtsheft Abgabe", "time": "11:00" } ] }
+  ],
+  "mails": [
+    { "sub": "Technik-Anfrage: Betriebl. Altersversorgung 2026 Berlin", "from": "J. Franz · Handelsblatt Group", "c": "var(--teal)", "act": "Lead → Projekt" },
+    { "sub": "Angebot ZPG-ANG-VM-2026-148 abgelaufen – Sanofi", "from": "Rentman", "c": "var(--amber)", "act": "nachfassen" },
+    { "sub": "Sanofi – New Event Management Processes & Requirements", "from": "info@z-pg.com · Sanofi", "c": "var(--accent)", "act": "prüfen" },
+    { "sub": "3 neue Belege in Belegfreigabe hochgeladen", "from": "DATEV Unternehmen online", "c": "var(--amber)", "act": "freigeben" },
+    { "sub": "Nutzer-Anfrage: „Buchhaltung & Büro (m/w/d) – Minijob“", "from": "verkauf@z-pg.com", "c": "var(--violet)", "act": "" }
+  ]
+}

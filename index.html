@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ZPG Cockpit</title>
+<style>
+  :root{
+    --bg:#0f1420; --bg2:#161d2e; --card:#1b2333; --card2:#212b3f;
+    --line:#2b3752; --txt:#eef2f9; --mut:#9aa8c2; --mut2:#6c7a97;
+    --accent:#5b8cff; --teal:#26c6a8; --amber:#f2b34a; --red:#f2686a; --violet:#a684ff;
+    --shadow:0 1px 3px rgba(0,0,0,.4),0 8px 28px rgba(0,0,0,.28);
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#eef1f7; --bg2:#e6ebf4; --card:#ffffff; --card2:#f6f8fc;
+      --line:#e2e8f2; --txt:#141b2b; --mut:#5a6478; --mut2:#8b95a8;
+      --accent:#2f6bff; --teal:#0aa587; --amber:#c9871a; --red:#dc4144; --violet:#7c53e6;
+      --shadow:0 1px 2px rgba(20,30,60,.06),0 10px 30px rgba(20,30,60,.08);
+    }
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:linear-gradient(180deg,var(--bg),var(--bg2) 60%);
+    color:var(--txt); line-height:1.5; min-height:100vh; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:0 20px 60px}
+  /* Sticky Topbar */
+  .top{position:sticky;top:0;z-index:20;background:color-mix(in srgb,var(--bg) 88%,transparent);
+    backdrop-filter:blur(10px);border-bottom:1px solid var(--line);padding:16px 0 0}
+  .toprow{max-width:1240px;margin:0 auto;padding:0 20px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:14px}
+  .brand{display:flex;align-items:center;gap:13px}
+  .logo{width:42px;height:42px;border-radius:11px;background:linear-gradient(135deg,var(--accent),var(--violet));
+    display:flex;align-items:center;justify-content:center;font-weight:800;font-size:16px;color:#fff;letter-spacing:.5px;box-shadow:var(--shadow)}
+  h1{font-size:20px;font-weight:750;letter-spacing:-.3px}
+  .brand .sub{color:var(--mut);font-size:12px;margin-top:1px}
+  .stamp{text-align:right;font-size:11.5px;color:var(--mut)}
+  .stamp b{color:var(--txt);font-weight:650}
+  .live{display:inline-flex;align-items:center;gap:6px;font-size:10.5px;font-weight:650;color:var(--teal);
+    background:color-mix(in srgb,var(--teal) 14%,transparent);padding:3px 8px;border-radius:20px;margin-bottom:5px}
+  .dot{width:7px;height:7px;border-radius:50%;background:var(--teal);animation:p 2s infinite}
+  @keyframes p{0%{box-shadow:0 0 0 0 color-mix(in srgb,var(--teal) 60%,transparent)}70%{box-shadow:0 0 0 7px transparent}100%{box-shadow:0 0 0 0 transparent}}
+  /* Tabs */
+  .tabs{max-width:1240px;margin:14px auto 0;padding:0 20px;display:flex;gap:6px}
+  .tab{appearance:none;border:none;cursor:pointer;font:inherit;font-size:14px;font-weight:650;color:var(--mut);
+    background:transparent;padding:11px 18px 13px;border-bottom:2.5px solid transparent;display:flex;align-items:center;gap:8px}
+  .tab:hover{color:var(--txt)}
+  .tab.active{color:var(--txt);border-bottom-color:var(--accent)}
+  .tab .badge{font-size:10.5px;font-weight:700;background:var(--card2);border:1px solid var(--line);color:var(--mut);padding:1px 7px;border-radius:20px}
+  .tab.active .badge{background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent);border-color:transparent}
+
+  .panel{display:none;padding-top:24px}
+  .panel.active{display:block;animation:f .25s ease}
+  @keyframes f{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:20px}
+  .kpi{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:15px 17px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+  .kpi::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--accent)}
+  .kpi.k-red::before{background:var(--red)} .kpi.k-teal::before{background:var(--teal)}
+  .kpi.k-violet::before{background:var(--violet)} .kpi.k-amber::before{background:var(--amber)}
+  .kpi .lab{font-size:11.5px;color:var(--mut);font-weight:600;text-transform:uppercase;letter-spacing:.4px}
+  .kpi .val{font-size:26px;font-weight:780;margin-top:7px;letter-spacing:-.5px}
+  .kpi .meta{font-size:11.5px;color:var(--mut);margin-top:4px}
+
+  .grid{display:grid;grid-template-columns:1.35fr 1fr;gap:18px}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:18px;box-shadow:var(--shadow);overflow:hidden}
+  .card h2{font-size:14px;font-weight:700;padding:14px 18px;border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;gap:8px}
+  .card h2 .ico{width:22px;height:22px;border-radius:7px;display:inline-flex;align-items:center;justify-content:center;font-size:12px;margin-right:9px}
+  .card h2 .t{display:flex;align-items:center}
+  .pill{font-size:11px;font-weight:650;color:var(--mut);background:var(--card2);border:1px solid var(--line);padding:3px 9px;border-radius:20px}
+  .body{padding:6px 8px 10px}
+
+  .row{display:flex;align-items:center;gap:12px;padding:10px 12px;border-radius:10px}
+  .row+.row{border-top:1px solid var(--line)}
+  .row:hover{background:var(--card2)}
+  .when{flex:0 0 58px;text-align:center}
+  .when .d{font-size:16px;font-weight:750;line-height:1}
+  .when .m{font-size:10px;color:var(--mut);text-transform:uppercase;letter-spacing:.5px;margin-top:2px}
+  .rmain{flex:1;min-width:0}
+  .rtitle{font-size:13.5px;font-weight:620;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .rsub{font-size:11.5px;color:var(--mut);margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .amt{flex:0 0 auto;font-size:13px;font-weight:700;text-align:right}
+  .tag{display:inline-block;font-size:10px;font-weight:700;padding:2px 7px;border-radius:6px;letter-spacing:.2px}
+  .tag.live{background:color-mix(in srgb,var(--teal) 16%,transparent);color:var(--teal)}
+  .tag.soon{background:color-mix(in srgb,var(--accent) 16%,transparent);color:var(--accent)}
+  .tag.over{background:color-mix(in srgb,var(--red) 16%,transparent);color:var(--red)}
+  .tag.time{background:var(--card2);color:var(--mut);border:1px solid var(--line)}
+
+  .fin{display:flex;gap:10px;padding:12px;flex-wrap:wrap}
+  .finbox{flex:1;min-width:130px;background:var(--card2);border:1px solid var(--line);border-radius:12px;padding:12px 14px}
+  .finbox .l{font-size:11px;color:var(--mut);font-weight:600}
+  .finbox .n{font-size:19px;font-weight:760;margin-top:5px}
+
+  .stage{display:flex;align-items:center;gap:10px;padding:9px 14px}
+  .stage+.stage{border-top:1px solid var(--line)}
+  .schip{width:10px;height:10px;border-radius:3px;flex:0 0 auto}
+  .sname{flex:1;font-size:13px;font-weight:600}
+  .scount{font-size:13px;font-weight:750}
+  .sbar{flex:0 0 90px;height:7px;background:var(--card2);border-radius:5px;overflow:hidden}
+  .sbar>span{display:block;height:100%}
+
+  .mailrow{display:flex;gap:11px;padding:10px 13px;align-items:flex-start}
+  .mailrow+.mailrow{border-top:1px solid var(--line)}
+  .mdot{flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:6px}
+  .mmain{flex:1;min-width:0}
+  .msub{font-size:13px;font-weight:620;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .mfrom{font-size:11.5px;color:var(--mut);margin-top:2px}
+  .mact{flex:0 0 auto;font-size:10.5px;font-weight:700;color:var(--amber);background:color-mix(in srgb,var(--amber) 15%,transparent);padding:3px 8px;border-radius:6px;align-self:center}
+
+  /* Banner / Hinweis */
+  .banner{display:flex;gap:12px;align-items:flex-start;background:color-mix(in srgb,var(--amber) 10%,var(--card));
+    border:1px solid color-mix(in srgb,var(--amber) 35%,var(--line));border-radius:14px;padding:14px 16px;margin-bottom:18px}
+  .banner .bi{font-size:18px;line-height:1.2}
+  .banner b{font-weight:700}
+  .banner .bt{font-size:13px;color:var(--txt)}
+  .banner .bt span{color:var(--mut)}
+
+  .placeholder{color:var(--mut2);font-style:italic}
+  .liqtable{width:100%;border-collapse:collapse;font-size:13.5px}
+  .liqtable td{padding:10px 16px;border-top:1px solid var(--line)}
+  .liqtable tr:first-child td{border-top:none}
+  .liqtable td:last-child{text-align:right;font-weight:700}
+  .liqtable tr.hi td{background:color-mix(in srgb,var(--accent) 8%,transparent);font-weight:700}
+  .liqtable tr.hi td:first-child{color:var(--accent)}
+
+  .radar{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .rcol h3{font-size:12px;text-transform:uppercase;letter-spacing:.5px;color:var(--mut);padding:0 4px 8px}
+  .rcol .item{background:var(--card2);border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:12.5px;margin-bottom:8px}
+  .todo{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;cursor:pointer}
+  .todo+.todo{border-top:1px solid var(--line)}
+  .todo .box{flex:0 0 auto;width:17px;height:17px;border-radius:5px;border:2px solid var(--mut);margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#fff}
+  .todo.done .box{background:var(--teal);border-color:var(--teal)}
+  .todo.done .txt{color:var(--mut2);text-decoration:line-through}
+  .todo .txt{font-size:13.5px}
+
+  footer{text-align:center;color:var(--mut2);font-size:12px;margin-top:26px;line-height:1.7}
+  .full{grid-column:1/-1}
+  a{color:var(--accent);text-decoration:none}
+  @media (max-width:900px){.kpis{grid-template-columns:repeat(2,1fr)}.grid{grid-template-columns:1fr}.radar{grid-template-columns:1fr}}
+  @media (max-width:520px){.kpis{grid-template-columns:1fr}.tab{padding:10px 12px}}
+</style>
+</head>
+<body>
+  <div class="top">
+    <div class="toprow">
+      <div class="brand">
+        <div class="logo">ZPG</div>
+        <div>
+          <h1>Cockpit</h1>
+          <div class="sub">ZPG Productions &amp; Eventservice GmbH</div>
+        </div>
+      </div>
+      <div class="stamp">
+        <div class="live"><span class="dot"></span>LIVE-Tab: auto, mehrmals täglich</div>
+        <div>Live aktualisiert: <b id="stamp">–</b></div>
+      </div>
+    </div>
+    <div class="tabs">
+      <button class="tab active" data-tab="live">🟢 Live <span class="badge">auto</span></button>
+      <button class="tab" data-tab="fin">€ Finanzen &amp; Liquidität <span class="badge">auf Zuruf</span></button>
+      <button class="tab" data-tab="week">🗓 Weekly <span class="badge">KW 30</span></button>
+    </div>
+  </div>
+
+  <div class="wrap">
+
+    <!-- ============ TAB 1: LIVE ============ -->
+    <section class="panel active" id="live">
+      <div class="kpis">
+        <div class="kpi k-red">
+          <div class="lab">Offene Rechnungen</div><div class="val" id="kpiInvVal">–</div>
+          <div class="meta" id="kpiInvMeta"></div>
+        </div>
+        <div class="kpi k-teal">
+          <div class="lab">Kommende Projekte</div><div class="val" id="kpiProjVal">–</div>
+          <div class="meta" id="kpiProjMeta"></div>
+        </div>
+        <div class="kpi k-violet">
+          <div class="lab">Offene Deals (HubSpot)</div><div class="val" id="kpiDealVal">–</div>
+          <div class="meta" id="kpiDealMeta"></div>
+        </div>
+        <div class="kpi k-amber">
+          <div class="lab">Termine (7 Tage)</div><div class="val" id="kpiTermVal">–</div>
+          <div class="meta" id="kpiTermMeta"></div>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--teal) 18%,transparent);color:var(--teal)">▣</span>Anstehende Projekte · Rentman</span><span class="pill">nach Startdatum</span></h2>
+          <div class="body" id="projects"></div>
+        </div>
+
+        <div style="display:flex;flex-direction:column;gap:18px">
+          <div class="card">
+            <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--red) 18%,transparent);color:var(--red)">€</span>Offene Ausgangsrechnungen</span><span class="pill" id="invPill">offen</span></h2>
+            <div class="body" id="invoices"></div>
+          </div>
+          <div class="card">
+            <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--violet) 18%,transparent);color:var(--violet)">◔</span>Pipeline · HubSpot</span><span class="pill" id="pipePill">Deals</span></h2>
+            <div class="body" id="pipeline"></div>
+          </div>
+        </div>
+
+        <div class="card full">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)">◷</span>Kalender · nächste Termine</span><span class="pill">Google Calendar</span></h2>
+          <div class="body" id="calendar"></div>
+        </div>
+
+        <div class="card">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--amber) 18%,transparent);color:var(--amber)">✉</span>Wichtige Mails &amp; To-Dos</span><span class="pill">Gmail</span></h2>
+          <div class="body" id="mails"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAB 2: FINANZEN (manuell, auf Zuruf) ============ -->
+    <section class="panel" id="fin">
+      <div class="banner">
+        <div class="bi">⏳</div>
+        <div class="bt"><b>Finanzstand noch nicht in diesem Zyklus aktualisiert.</b><br>
+          <span>Sag mir „<b>aktualisiere Liquidität</b>" und nenn mir Kontostände (GmbH + Rücklagen) sowie die offenen DATEV-Eingangsrechnungen – dann fülle ich Konten, Netto-Liquidität und Runway. Die Ausgangsrechnungen unten kommen automatisch aus Rentman.</span></div>
+      </div>
+
+      <div class="kpis">
+        <div class="kpi k-teal"><div class="lab">Konten gesamt</div><div class="val placeholder">—</div><div class="meta">GmbH + Rücklagen</div></div>
+        <div class="kpi k-accent" style="--x:1"><div class="lab">Netto-Liquidität</div><div class="val placeholder">—</div><div class="meta">nach offenen Verbindlichkeiten</div></div>
+        <div class="kpi k-amber"><div class="lab">Runway</div><div class="val placeholder">—</div><div class="meta">÷ 42.000 € Fixkosten/Monat</div></div>
+        <div class="kpi k-red"><div class="lab">Ausstehende Forderungen</div><div class="val" id="finForderungen">—</div><div class="meta">brutto, aus Rentman*</div></div>
+      </div>
+
+      <div class="grid">
+        <div class="card">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--teal) 18%,transparent);color:var(--teal)">🏦</span>Liquiditätsstatus</span><span class="pill">bei Zuruf befüllt</span></h2>
+          <table class="liqtable">
+            <tr><td>GmbH-Konto</td><td class="placeholder">—</td></tr>
+            <tr><td>Rücklagenkonto</td><td class="placeholder">—</td></tr>
+            <tr class="hi"><td>Konten gesamt</td><td class="placeholder">—</td></tr>
+            <tr><td>− Offene Eingangsrechnungen (netto)</td><td class="placeholder">—</td></tr>
+            <tr class="hi"><td>Netto-Liquidität</td><td class="placeholder">—</td></tr>
+            <tr><td>+ Ausstehende Forderungen (netto)</td><td class="placeholder">—</td></tr>
+            <tr><td>+ Zu fakturieren</td><td class="placeholder">—</td></tr>
+            <tr class="hi"><td>Potenzielle Liquidität</td><td class="placeholder">—</td></tr>
+            <tr><td>Reichweite Netto-Liquidität</td><td class="placeholder">—</td></tr>
+            <tr><td>Reichweite potenziell</td><td class="placeholder">—</td></tr>
+          </table>
+        </div>
+
+        <div class="card">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--red) 18%,transparent);color:var(--red)">🚨</span>Mahnliste · überfällig</span><span class="pill">aus Rentman</span></h2>
+          <div class="body" id="mahnliste"></div>
+        </div>
+
+        <div class="card full">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--violet) 18%,transparent);color:var(--violet)">📊</span>Liquiditätsplanung (Excel)</span><span class="pill">Arbeits-Modell</span></h2>
+          <div class="body" style="padding:14px 16px;font-size:13px;color:var(--mut)">
+            Die vollständige Liquiditätsplanung mit Fixkosten, Leasing-Auslauf, Personalkosten und Saldo-Prognose Jun–Dez bleibt als bearbeitbare <b>Excel</b> bestehen (Google Drive · Ordner „ZPG Weekly"). Dieses Cockpit zeigt nur die Kernzahlen daraus. Befehl zum Aktualisieren: „<b>aktualisiere Liquiditätsplanung</b>".
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ============ TAB 3: WEEKLY (manuell, auf Zuruf) ============ -->
+    <section class="panel" id="week">
+      <div class="banner" style="background:color-mix(in srgb,var(--accent) 8%,var(--card));border-color:color-mix(in srgb,var(--accent) 30%,var(--line))">
+        <div class="bi">🗓</div>
+        <div class="bt"><b>KW 30 · 20.–26.07.2026.</b> <span>Wochenplan &amp; ZPG-Projekte kommen automatisch aus Kalender + Rentman. To-dos und Radar pflegst du per Zuruf („aktualisiere weekly").</span></div>
+      </div>
+
+      <div class="grid">
+        <div class="card full">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--accent) 18%,transparent);color:var(--accent)">📅</span>Wochenplan</span><span class="pill">Mo–So · KW 30</span></h2>
+          <div class="body" id="weekplan"></div>
+        </div>
+
+        <div class="card">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--teal) 18%,transparent);color:var(--teal)">🎪</span>ZPG Projekte diese Woche</span><span class="pill">Rentman</span></h2>
+          <div class="body" id="weekprojects"></div>
+        </div>
+
+        <div class="card">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--amber) 18%,transparent);color:var(--amber)">✓</span>Offene To-Dos</span><span class="pill">Vorschläge</span></h2>
+          <div class="body" id="todos"></div>
+        </div>
+
+        <div class="card full">
+          <h2><span class="t"><span class="ico" style="background:color-mix(in srgb,var(--violet) 18%,transparent);color:var(--violet)">📡</span>Radar · nicht verlieren</span><span class="pill">3 Bereiche</span></h2>
+          <div class="body" style="padding:14px 16px">
+            <div class="radar">
+              <div class="rcol"><h3>Kurzfristig</h3>
+                <div class="item">Sanofi-Angebot ZPG-ANG-VM-2026-148 abgelaufen → nachfassen</div>
+                <div class="item">DATEV-Belege freigeben (3 neu)</div>
+                <div class="item">WoMo-Versicherung anrufen (Mo)</div>
+              </div>
+              <div class="rcol"><h3>Akquise &amp; Marketing</h3>
+                <div class="item">Handelsblatt BAV Berlin → Angebot nachverfolgen</div>
+                <div class="item">z-pg.com Indexierungs-Fehler (Search Console) prüfen</div>
+                <div class="item">Minijob Buchhaltung/Büro – Bewerber-Anfrage</div>
+              </div>
+              <div class="rcol"><h3>Strategisch &amp; privat</h3>
+                <div class="item">„Operatives Geschäft abgegeben?" @Renke (Ziel Aug)</div>
+                <div class="item">Sanofi – neue Supplier-Prozesse ab 01.07. umsetzen</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <footer>
+      * Volumen, Summen &amp; Forderungen sind eigene Berechnungen aus Rentman-Werten und können intern abweichend berechnet sein.<br>
+      ZPG Cockpit · Live-Tab automatisch aus verbundenen Diensten · Finanzen &amp; Weekly auf Zuruf
+    </footer>
+  </div>
+
+<script>
+const eur = n => n.toLocaleString('de-DE',{maximumFractionDigits:0}) + ' €';
+const MON=["Jan","Feb","Mär","Apr","Mai","Jun","Jul","Aug","Sep","Okt","Nov","Dez"];
+
+/* Tabs */
+document.querySelectorAll('.tab').forEach(t=>t.addEventListener('click',()=>{
+  document.querySelectorAll('.tab').forEach(x=>x.classList.remove('active'));
+  document.querySelectorAll('.panel').forEach(x=>x.classList.remove('active'));
+  t.classList.add('active');
+  document.getElementById(t.dataset.tab).classList.add('active');
+}));
+
+/* ====== MANUELLE Inhalte (Weekly/Pipeline-Notiz) – NUR auf Zuruf ändern ====== */
+const stageColors=["var(--accent)","var(--teal)","var(--violet)","var(--amber)"];
+const pipelineNote='<div class="stage" style="color:var(--mut);font-size:11.5px"><span style="flex:1">Namhaft: Ammersee Serenade 2027 · PATRIZIA / BMW / Wacker (Jubiläum 2027) · Munich Startup Festival</span></div>';
+const weekendTail=[
+  {d:"Sa 25.07",items:[]},
+  {d:"So 26.07",items:[{t:"Surftown Charivari – Projektende",time:"ganztägig"}]}
+];
+const wkProjects=[
+  {name:"Dry Hire SimEvents",sub:"21.07 – 11.08 · #2026100"},
+  {name:"Surftown Charivari",sub:"24.07 – 26.07 · #2026093"}
+];
+const todos=["Sanofi-Angebot nachfassen (abgelaufen)","DATEV-Belege freigeben","WoMo-Versicherung anrufen","Handelsblatt BAV Berlin – Angebot nachverfolgen","Berichtsheft abgeben (Fr)"];
+
+/* ====== Rendering des LIVE-Tabs aus live-data.json ====== */
+const fmtRange=(s,e)=>{const a=new Date(s),b=new Date(e);const f=d=>d.getDate()+". "+MON[d.getMonth()];return f(a)+" – "+f(b)+" "+b.getFullYear();};
+
+function setText(id,val){const el=document.getElementById(id);if(el)el.textContent=val;}
+
+function render(data){
+  const projects=data.projects||[], invoices=data.invoices||[], stages=data.stages||[],
+        cal=data.cal||[], mails=data.mails||[], kpis=data.kpis||{};
+
+  /* Zeitstempel + KPI-Kacheln */
+  setText('stamp', data.stamp || '–');
+  if(kpis.invoices){setText('kpiInvVal',kpis.invoices.val);setText('kpiInvMeta',kpis.invoices.meta);}
+  if(kpis.projects){setText('kpiProjVal',kpis.projects.val);setText('kpiProjMeta',kpis.projects.meta);}
+  if(kpis.deals){setText('kpiDealVal',kpis.deals.val);setText('kpiDealMeta',kpis.deals.meta);}
+  if(kpis.termine){setText('kpiTermVal',kpis.termine.val);setText('kpiTermMeta',kpis.termine.meta);}
+
+  /* Projekte */
+  document.getElementById('projects').innerHTML = projects.map(p=>{
+    const d=new Date(p.s);
+    const tag=p.tag==="live"?'<span class="tag live">läuft</span>':p.tag==="soon"?'<span class="tag soon">diese Woche</span>':'';
+    return `<div class="row"><div class="when"><div class="d">${d.getDate()}</div><div class="m">${MON[d.getMonth()]}</div></div>
+      <div class="rmain"><div class="rtitle">${p.name} ${tag}</div><div class="rsub">#${p.num} · ${fmtRange(p.s,p.e)}</div></div>
+      <div class="amt">${p.v>0?eur(p.v):'—'}</div></div>`;}).join('');
+
+  /* Rechnungen + Mahnliste */
+  document.getElementById('invoices').innerHTML = invoices.map(i=>`
+    <div class="row"><div class="rmain"><div class="rtitle">${i.num} ${i.over?'<span class="tag over">überfällig</span>':''}</div>
+      <div class="rsub">Rechnungsdatum ${i.date}</div></div>
+      <div class="amt" style="color:${i.over?'var(--red)':'var(--txt)'}">${eur(i.amt)}</div></div>`).join('');
+  document.getElementById('invPill').textContent = invoices.length+' offen';
+
+  document.getElementById('mahnliste').innerHTML = invoices.filter(i=>i.over)
+    .sort((a,b)=>b.amt-a.amt).map(i=>`
+    <div class="row"><div class="rmain"><div class="rtitle">${i.num}</div>
+      <div class="rsub">seit ${i.date} offen</div></div>
+      <div class="amt" style="color:var(--red)">${eur(i.amt)}</div></div>`).join('');
+
+  /* Fin-KPI „Ausstehende Forderungen" aus Rechnungssumme (brutto) */
+  const sumInv = invoices.reduce((a,i)=>a+(i.amt||0),0);
+  setText('finForderungen', eur(sumInv));
+
+  /* Pipeline */
+  const maxc=Math.max(1,...stages.map(s=>s.c));
+  document.getElementById('pipeline').innerHTML=stages.map((s,i)=>{
+    const color=stageColors[i]||'var(--accent)';
+    return `<div class="stage"><span class="schip" style="background:${color}"></span><span class="sname">${s.name}</span>
+      <span class="sbar"><span style="width:${s.c/maxc*100}%;background:${color}"></span></span><span class="scount">${s.c}</span></div>`;}).join('')
+    + pipelineNote;
+  document.getElementById('pipePill').textContent = stages.reduce((a,s)=>a+s.c,0)+' Deals';
+
+  /* Kalender */
+  document.getElementById('calendar').innerHTML=cal.map(day=>`
+    <div class="row" style="align-items:flex-start"><div class="when"><div class="d">${day.d.split(' ')[1].split('.')[0]}</div><div class="m">${day.d.split(' ')[0]}</div></div>
+      <div class="rmain" style="display:flex;flex-direction:column;gap:6px">
+        ${day.items.map(it=>`<div style="display:flex;gap:10px;align-items:center"><span class="tag time">${it.time}</span><span class="rtitle" style="white-space:normal">${it.t}</span></div>`).join('')}
+      </div></div>`).join('');
+
+  /* Mails */
+  document.getElementById('mails').innerHTML=mails.map(m=>`
+    <div class="mailrow"><span class="mdot" style="background:${m.c}"></span>
+      <div class="mmain"><div class="msub">${m.sub}</div><div class="mfrom">${m.from}</div></div>
+      ${m.act?`<span class="mact">${m.act}</span>`:''}</div>`).join('');
+
+  /* Weekly · Wochenplan (Kalender live + Wochenende manuell) */
+  document.getElementById('weekplan').innerHTML=cal.concat(weekendTail).map(day=>`
+    <div class="row" style="align-items:flex-start"><div class="when"><div class="d">${day.d.split(' ')[1].split('.')[0]}</div><div class="m">${day.d.split(' ')[0]}</div></div>
+      <div class="rmain" style="display:flex;flex-direction:column;gap:6px">
+        ${day.items.length?day.items.map(it=>`<div style="display:flex;gap:10px;align-items:center"><span class="tag time">${it.time}</span><span class="rtitle" style="white-space:normal">${it.t}</span></div>`).join(''):'<span class="placeholder" style="font-size:12.5px">keine Termine</span>'}
+      </div></div>`).join('');
+}
+
+/* Weekly · statische (manuelle) Blöcke */
+document.getElementById('weekprojects').innerHTML=wkProjects.map(p=>`
+  <div class="row"><div class="rmain"><div class="rtitle">${p.name}</div><div class="rsub">${p.sub}</div></div></div>`).join('');
+document.getElementById('todos').innerHTML=todos.map(t=>`
+  <div class="todo" onclick="this.classList.toggle('done')"><span class="box">✓</span><span class="txt">${t}</span></div>`).join('');
+
+/* Live-Daten laden (Cache umgehen, damit frische Task-Updates sofort erscheinen) */
+fetch('live-data.json?v='+Date.now())
+  .then(r=>{if(!r.ok)throw new Error('HTTP '+r.status);return r.json();})
+  .then(render)
+  .catch(err=>{
+    setText('stamp','Daten konnten nicht geladen werden');
+    console.error('live-data.json load failed:',err);
+  });
+</script>
+</body>
+</html>
