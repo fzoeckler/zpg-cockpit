@@ -433,8 +433,9 @@ async function unlock(pw){
     decryptFile('finanzen-data.enc.json',pw),
     decryptFile('weekly-data.enc.json',pw)
   ]);
-  renderLive(L,WK); renderFin(F); renderWeek(L,WK);
   document.getElementById('gate').classList.add('hidden');
+  try { renderLive(L,WK); renderFin(F); renderWeek(L,WK); }
+  catch (e) { console.error('Render-Fehler:', e); }
 }
 
 const gForm=document.getElementById('gateForm'), gErr=document.getElementById('gateErr'), gBtn=document.getElementById('gateBtn'), gPw=document.getElementById('gatePw');
